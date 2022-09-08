@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Task from './components/Task';
 
 export default function App() {
   const [task, setTask] = useState();
+  const [taskItems, setTaskItems] = useState([]);
 
   const handleAddTask = () => {
-    console.log(task);
+    Keyboard.dismiss();
+    setTaskItems([...taskItems, task])
+    setTask(null);
   }
 
   return (
@@ -18,8 +21,12 @@ export default function App() {
 
         <View style={styles.items}>
           {/*Item Container For Tasks*/}
-          <Task text= {'Task 1'}/>
-          <Task text= {'Task 2'}/>
+          {
+            taskItems.map((item, index) => {
+              return<Task key = {index} text={item} />
+            })
+          }
+          
           
         </View>
 
